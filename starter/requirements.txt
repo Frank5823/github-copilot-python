@@ -1,1 +1,4 @@
 Flask>=2.0
+black
+pytest
+pytest-black
