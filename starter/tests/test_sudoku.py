@@ -78,3 +78,16 @@ def test_check_route(client):
     test_board = [[0] * 9 for _ in range(9)]
     response = client.post("/check", json={"board": test_board})
     assert response.status_code == 200
+
+
+def test_hint_route(client):
+    """Test GET /hint endpoint."""
+    response = client.get("/new?difficulty=easy")
+    assert response.status_code == 200
+    hint_res = client.get("/hint")
+    assert hint_res.status_code == 200
+    data = hint_res.get_json()
+    assert "row" in data and "col" in data and "value" in data
+    assert isinstance(data["row"], int)
+    assert isinstance(data["col"], int)
+    assert isinstance(data["value"], int)

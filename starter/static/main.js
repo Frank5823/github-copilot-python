@@ -138,6 +138,29 @@ async function newGame() {
   startTimer();
 }
 
+async function hint() {
+  const res = await fetch('/hint');
+  const data = await res.json();
+  const msg = document.getElementById('message');
+  if (data.error) {
+    msg.style.color = '#d32f2f';
+    msg.innerText = data.error;
+    return;
+  }
+
+  const boardDiv = document.getElementById('sudoku-board');
+  const input = boardDiv.querySelector(`input[data-row="${data.row}"][data-col="${data.col}"]`);
+  if (input) {
+    input.value = data.value;
+    input.disabled = true;
+    input.classList.remove('incorrect');
+    input.classList.add('prefilled');
+  }
+
+  msg.style.color = '#388e3c';
+  msg.innerText = `Hint applied at row ${data.row + 1}, col ${data.col + 1}.`;
+}
+
 async function checkSolution() {
   const boardDiv = document.getElementById('sudoku-board');
   const inputs = boardDiv.getElementsByTagName('input');
@@ -189,10 +212,36 @@ async function checkSolution() {
   }
 }
 
+async function giveHint() {
+  const res = await fetch('/hint');
+  const data = await res.json();
+  const msg = document.getElementById('message');
+
+  if (data.error) {
+    msg.style.color = '#d32f2f';
+    msg.innerText = data.error;
+    return;
+  }
+
+  const boardDiv = document.getElementById('sudoku-board');
+  const inputs = boardDiv.getElementsByTagName('input');
+  const idx = data.row * SIZE + data.col;
+  const input = inputs[idx];
+  if (input && !input.disabled) {
+    input.value = data.value;
+    input.disabled = true;
+    input.classList.add('prefilled');
+    input.classList.remove('incorrect');
+    msg.style.color = '#1976d2';
+    msg.innerText = `Hint: cell (${data.row + 1}, ${data.col + 1}) set to ${data.value}.`;
+  }
+}
+
 // Wire buttons
 window.addEventListener('load', () => {
   document.getElementById('new-game').addEventListener('click', newGame);
   document.getElementById('check-solution').addEventListener('click', checkSolution);
+  document.getElementById('hint').addEventListener('click', hint);
   
   // Difficulty buttons
   const difficultyBtns = document.querySelectorAll('.difficulty-btn');

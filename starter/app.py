@@ -29,6 +29,23 @@ def new_game():
     CURRENT['solution'] = solution
     return jsonify({'puzzle': puzzle})
 
+@app.route('/hint')
+def hint():
+    puzzle = CURRENT.get('puzzle')
+    solution = CURRENT.get('solution')
+    if puzzle is None or solution is None:
+        return jsonify({'error': 'No game in progress'}), 400
+
+    for i in range(sudoku_logic.SIZE):
+        for j in range(sudoku_logic.SIZE):
+            if puzzle[i][j] == sudoku_logic.EMPTY:
+                value = solution[i][j]
+                puzzle[i][j] = value
+                CURRENT['puzzle'] = puzzle
+                return jsonify({'row': i, 'col': j, 'value': value})
+
+    return jsonify({'error': 'Puzzle is already complete'}), 400
+
 @app.route('/check', methods=['POST'])
 def check_solution():
     data = request.json
