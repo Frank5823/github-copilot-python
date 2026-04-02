@@ -46,6 +46,13 @@ h1 {
 
 .sudoku-cell.incorrect {
     background: #ffcdd2;
+    border-color: #d32f2f;
+    animation: blink-error 0.8s ease 0s 2;
+}
+
+@keyframes blink-error {
+    0%, 100% { box-shadow: 0 0 0px rgba(211, 47, 47, 0); }
+    50% { box-shadow: 0 0 8px rgba(211, 47, 47, 0.8); }
 }
 
 .sudoku-cell:nth-child(3),
@@ -60,6 +67,32 @@ h1 {
 
 .controls {
     margin: 20px auto;
+}
+
+.difficulty {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.difficulty-btn {
+    padding: 6px 12px;
+    margin: 0 4px;
+    font-size: 14px;
+    border: 2px solid #1976d2;
+    background: #fff;
+    color: #1976d2;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.difficulty-btn:hover {
+    background: #e3f2fd;
+}
+
+.difficulty-btn.active {
+    background: #1976d2;
+    color: #fff;
 }
 
 button {

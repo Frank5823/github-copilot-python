@@ -3,6 +3,13 @@ import sudoku_logic
 
 app = Flask(__name__)
 
+# Difficulty levels mapping to number of clues
+DIFFICULTIES = {
+    'easy': 50,
+    'medium': 35,
+    'hard': 25
+}
+
 # Keep a simple in-memory store for current puzzle and solution
 CURRENT = {
     'puzzle': None,
@@ -15,7 +22,8 @@ def index():
 
 @app.route('/new')
 def new_game():
-    clues = int(request.args.get('clues', 35))
+    difficulty = request.args.get('difficulty', 'medium')
+    clues = DIFFICULTIES.get(difficulty, DIFFICULTIES['medium'])
     puzzle, solution = sudoku_logic.generate_puzzle(clues)
     CURRENT['puzzle'] = puzzle
     CURRENT['solution'] = solution
