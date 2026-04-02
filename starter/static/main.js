@@ -2,6 +2,35 @@
 const SIZE = 9;
 let puzzle = [];
 let currentDifficulty = 'medium';
+let startTime = null;
+let timerInterval = null;
+
+function formatTime(seconds) {
+  const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const secs = String(seconds % 60).padStart(2, '0');
+  return `${mins}:${secs}`;
+}
+
+function updateTimer() {
+  if (!startTime) return;
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  document.getElementById('timer').innerText = `Time: ${formatTime(elapsed)}`;
+}
+
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  startTime = Date.now();
+  updateTimer();
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+function stopTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+}
+
 
 function createBoardElement() {
   const boardDiv = document.getElementById('sudoku-board');
@@ -106,6 +135,7 @@ async function newGame() {
   const data = await res.json();
   renderPuzzle(data.puzzle);
   document.getElementById('message').innerText = '';
+  startTimer();
 }
 
 async function checkSolution() {
@@ -143,8 +173,9 @@ async function checkSolution() {
     }
   }
   if (incorrect.size === 0) {
+    stopTimer();
     msg.style.color = '#388e3c';
-    msg.innerText = '🎉 Congratulations! You solved the Sudoku! 🎉';
+    msg.innerText = `🎉 Congratulations! You solved the Sudoku in ${document.getElementById('timer').innerText.replace('Time: ', '')}! 🎉`;
     // highlight all non-locked cells as success
     for (let idx = 0; idx < inputs.length; idx++) {
       const inp = inputs[idx];
