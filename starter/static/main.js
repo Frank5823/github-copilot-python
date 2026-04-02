@@ -5,6 +5,31 @@ let currentDifficulty = 'medium';
 let startTime = null;
 let timerInterval = null;
 
+// Theme management
+function initTheme() {
+  const savedTheme = localStorage.getItem('sudoku-theme') || 'light';
+  applyTheme(savedTheme);
+}
+
+function applyTheme(theme) {
+  const body = document.body;
+  const toggle = document.getElementById('theme-toggle');
+  if (theme === 'dark') {
+    body.classList.add('dark-mode');
+    toggle.textContent = '☀️ Light';
+  } else {
+    body.classList.remove('dark-mode');
+    toggle.textContent = '🌙 Dark';
+  }
+  localStorage.setItem('sudoku-theme', theme);
+}
+
+function toggleTheme() {
+  const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  applyTheme(newTheme);
+}
+
 function formatTime(seconds) {
   const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
   const secs = String(seconds % 60).padStart(2, '0');
@@ -239,6 +264,8 @@ async function giveHint() {
 
 // Wire buttons
 window.addEventListener('load', () => {
+  initTheme();
+  document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
   document.getElementById('new-game').addEventListener('click', newGame);
   document.getElementById('check-solution').addEventListener('click', checkSolution);
   document.getElementById('hint').addEventListener('click', hint);

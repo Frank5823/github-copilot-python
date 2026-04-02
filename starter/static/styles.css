@@ -1,22 +1,84 @@
+:root {
+    --bg-primary: #f4f4f4;
+    --bg-secondary: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-primary: #333333;
+    --border-secondary: #bbbbbb;
+    --cell-bg: #fafafa;
+    --cell-prefilled: #e0e0e0;
+    --focus-bg: #e0f7fa;
+    --button-base: #1976d2;
+    --button-hover: #1565c0;
+    --error-bg: #ffcdd2;
+    --error-border: #d32f2f;
+    --success-bg: #c8e6c9;
+    --success-border: #388e3c;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+    --bg-primary: #1e1e1e;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --border-primary: #555555;
+    --border-secondary: #444444;
+    --cell-bg: #3a3a3a;
+    --cell-prefilled: #4a4a4a;
+    --focus-bg: #1a5f6f;
+    --button-base: #2196f3;
+    --button-hover: #1976d2;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
 body {
     font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    background: var(--bg-primary);
     text-align: center;
     margin: 0;
     padding: 0;
+    color: var(--text-primary);
+    transition: background 0.3s, color 0.3s;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    gap: 20px;
 }
 
 h1 {
-    margin-top: 30px;
-    color: #333;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.theme-toggle {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: 2px solid var(--button-base);
+    background: var(--bg-secondary);
+    color: var(--button-base);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.theme-toggle:hover {
+    background: var(--button-base);
+    color: white;
 }
 
 #sudoku-board {
     display: inline-block;
     margin: 30px auto;
-    border: 4px solid #333;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 4px solid var(--border-primary);
+    background: var(--bg-secondary);
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: border-color 0.3s, background 0.3s;
 }
 
 .sudoku-row {
@@ -26,33 +88,34 @@ h1 {
 .sudoku-cell {
     width: 40px;
     height: 40px;
-    border: 1px solid #bbb;
+    border: 1px solid var(--border-secondary);
     text-align: center;
     font-size: 20px;
     outline: none;
-    background: #fafafa;
-    transition: background 0.2s;
+    background: var(--cell-bg);
+    color: var(--text-primary);
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .sudoku-cell:focus {
-    background: #e0f7fa;
+    background: var(--focus-bg);
 }
 
 .sudoku-cell.prefilled {
-    background: #e0e0e0;
+    background: var(--cell-prefilled);
     font-weight: bold;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .sudoku-cell.incorrect {
-    background: #ffcdd2;
-    border-color: #d32f2f;
+    background: var(--error-bg);
+    border-color: var(--error-border);
     animation: blink-error 0.8s ease 0s 2;
 }
 
 .sudoku-cell.success {
-    background: #c8e6c9;
-    border-color: #388e3c;
+    background: var(--success-bg);
+    border-color: var(--success-border);
     animation: glow-success 0.8s ease 0s 1;
 }
 
@@ -68,12 +131,12 @@ h1 {
 
 .sudoku-cell:nth-child(3),
 .sudoku-cell:nth-child(6) {
-    border-right: 3px solid #333;
+    border-right: 3px solid var(--border-primary);
 }
 
 .sudoku-row:nth-child(3) .sudoku-cell,
 .sudoku-row:nth-child(6) .sudoku-cell {
-    border-bottom: 3px solid #333;
+    border-bottom: 3px solid var(--border-primary);
 }
 
 .controls {
@@ -89,21 +152,21 @@ h1 {
     padding: 6px 12px;
     margin: 0 4px;
     font-size: 14px;
-    border: 2px solid #1976d2;
-    background: #fff;
-    color: #1976d2;
+    border: 2px solid var(--button-base);
+    background: var(--bg-secondary);
+    color: var(--button-base);
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .difficulty-btn:hover {
-    background: #e3f2fd;
+    background: rgba(25, 118, 210, 0.1);
 }
 
 .difficulty-btn.active {
-    background: #1976d2;
-    color: #fff;
+    background: var(--button-base);
+    color: white;
 }
 
 button {
@@ -111,8 +174,8 @@ button {
     margin: 0 8px;
     font-size: 16px;
     border: none;
-    background: #1976d2;
-    color: #fff;
+    background: var(--button-base);
+    color: white;
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.2s;
