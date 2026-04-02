@@ -91,3 +91,34 @@ def test_hint_route(client):
     assert isinstance(data["row"], int)
     assert isinstance(data["col"], int)
     assert isinstance(data["value"], int)
+
+
+def test_score_save_route(client):
+    """Test POST /score endpoint."""
+    response = client.post(
+        "/score",
+        json={
+            "username": "TestPlayer",
+            "difficulty": "medium",
+            "hints": 2,
+            "time": 180,
+        },
+    )
+    assert response.status_code == 200
+    data = response.get_json()
+    assert data["success"] is True
+
+
+def test_scores_list_route(client):
+    """Test GET /scores endpoint."""
+    # Save a score first
+    client.post(
+        "/score",
+        json={"username": "Player1", "difficulty": "easy", "hints": 1, "time": 120},
+    )
+
+    response = client.get("/scores")
+    assert response.status_code == 200
+    data = response.get_json()
+    assert "scores" in data
+    assert isinstance(data["scores"], list)

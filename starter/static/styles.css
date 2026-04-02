@@ -81,6 +81,104 @@ h1 {
     transition: border-color 0.3s, background 0.3s;
 }
 
+.leaderboard-display {
+    margin: 30px auto;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-secondary);
+    border-radius: 8px;
+    max-width: 600px;
+    color: var(--text-primary);
+}
+
+.leaderboard-display h3 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+#leaderboard-content {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 12px;
+    border-bottom: 2px solid var(--border-secondary);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-secondary);
+    font-size: 14px;
+    align-items: center;
+}
+
+.leaderboard-item:nth-child(even) {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+body.dark-mode .leaderboard-item:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.leaderboard-rank {
+    width: 35px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.leaderboard-rank.rank-1 {
+    color: #ffd700;
+    font-size: 16px;
+}
+
+.leaderboard-rank.rank-2 {
+    color: #c0c0c0;
+}
+
+.leaderboard-rank.rank-3 {
+    color: #cd7f32;
+}
+
+.leaderboard-name {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.leaderboard-diff {
+    width: 65px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.leaderboard-hints {
+    width: 50px;
+    text-align: center;
+}
+
+.leaderboard-time {
+    width: 60px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.no-scores {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-secondary);
+}
+
 .sudoku-row {
     display: flex;
 }
@@ -182,11 +280,142 @@ button {
 }
 
 button:hover {
-    background: #1565c0;
+    background: var(--button-hover);
 }
 
 #message {
     margin-left: 20px;
     font-size: 16px;
     color: #d32f2f;
+}
+
+.leaderboard-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px var(--shadow);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    color: var(--text-primary);
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+.close:hover {
+    color: var(--button-base);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: var(--text-primary);
+}
+
+#username-input {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 2px solid var(--border-secondary);
+    border-radius: 4px;
+    background: var(--cell-bg);
+    color: var(--text-primary);
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+#username-input:focus {
+    outline: none;
+    border-color: var(--button-base);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    margin: 0;
+}
+
+#win-stats {
+    font-size: 14px;
+    margin: 10px 0;
+    color: var(--text-secondary);
+}
+
+#leaderboard-list {
+    margin-top: 20px;
+}
+
+.leaderboard-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-secondary);
+    font-size: 14px;
+}
+
+.leaderboard-entry:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .leaderboard-entry:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.leaderboard-rank {
+    font-weight: bold;
+    width: 30px;
+}
+
+.leaderboard-name {
+    flex: 1;
+}
+
+.leaderboard-difficulty {
+    width: 80px;
+}
+
+.leaderboard-hints {
+    width: 60px;
+}
+
+.leaderboard-time {
+    width: 80px;
+    text-align: right;
 }

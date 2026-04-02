@@ -1,0 +1,72 @@
+[
+  {
+    "username": "Player1",
+    "difficulty": "easy",
+    "hints": 1,
+    "time": 120,
+    "timestamp": "2026-04-02T14:44:54.444429"
+  },
+  {
+    "username": "Player1",
+    "difficulty": "easy",
+    "hints": 1,
+    "time": 120,
+    "timestamp": "2026-04-02T14:45:18.421361"
+  },
+  {
+    "username": "Player1",
+    "difficulty": "easy",
+    "hints": 1,
+    "time": 120,
+    "timestamp": "2026-04-02T14:45:39.892971"
+  },
+  {
+    "username": "Player1",
+    "difficulty": "easy",
+    "hints": 1,
+    "time": 120,
+    "timestamp": "2026-04-02T14:49:52.227069"
+  },
+  {
+    "username": "Player1",
+    "difficulty": "easy",
+    "hints": 1,
+    "time": 120,
+    "timestamp": "2026-04-02T14:53:17.969671"
+  },
+  {
+    "username": "TestPlayer",
+    "difficulty": "medium",
+    "hints": 2,
+    "time": 180,
+    "timestamp": "2026-04-02T14:44:54.439996"
+  },
+  {
+    "username": "TestPlayer",
+    "difficulty": "medium",
+    "hints": 2,
+    "time": 180,
+    "timestamp": "2026-04-02T14:45:18.418367"
+  },
+  {
+    "username": "TestPlayer",
+    "difficulty": "medium",
+    "hints": 2,
+    "time": 180,
+    "timestamp": "2026-04-02T14:45:39.888623"
+  },
+  {
+    "username": "TestPlayer",
+    "difficulty": "medium",
+    "hints": 2,
+    "time": 180,
+    "timestamp": "2026-04-02T14:49:52.223069"
+  },
+  {
+    "username": "TestPlayer",
+    "difficulty": "medium",
+    "hints": 2,
+    "time": 180,
+    "timestamp": "2026-04-02T14:53:17.964330"
+  }
+]

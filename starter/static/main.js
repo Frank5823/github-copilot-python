@@ -4,6 +4,7 @@ let puzzle = [];
 let currentDifficulty = 'medium';
 let startTime = null;
 let timerInterval = null;
+let hintsUsed = 0;
 
 // Theme management
 function initTheme() {
@@ -39,7 +40,8 @@ function formatTime(seconds) {
 function updateTimer() {
   if (!startTime) return;
   const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  document.getElementById('timer').innerText = `Time: ${formatTime(elapsed)}`;
+  const timeStr = formatTime(elapsed);
+  document.getElementById('timer').innerText = `Time: ${timeStr}`;
 }
 
 function startTimer() {
@@ -160,6 +162,7 @@ async function newGame() {
   const data = await res.json();
   renderPuzzle(data.puzzle);
   document.getElementById('message').innerText = '';
+  hintsUsed = 0;
   startTimer();
 }
 
@@ -182,8 +185,9 @@ async function hint() {
     input.classList.add('prefilled');
   }
 
+  hintsUsed++;
   msg.style.color = '#388e3c';
-  msg.innerText = `Hint applied at row ${data.row + 1}, col ${data.col + 1}.`;
+  msg.innerText = `Hint applied at row ${data.row + 1}, col ${data.col + 1}. (${hintsUsed} hints used)`;
 }
 
 async function checkSolution() {
@@ -222,19 +226,89 @@ async function checkSolution() {
   }
   if (incorrect.size === 0) {
     stopTimer();
-    msg.style.color = '#388e3c';
-    msg.innerText = `🎉 Congratulations! You solved the Sudoku in ${document.getElementById('timer').innerText.replace('Time: ', '')}! 🎉`;
-    // highlight all non-locked cells as success
-    for (let idx = 0; idx < inputs.length; idx++) {
-      const inp = inputs[idx];
-      if (!inp.disabled) {
-        inp.classList.add('success');
-      }
-    }
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    showWinModal(elapsed);
   } else {
     msg.style.color = '#d32f2f';
     msg.innerText = `${incorrect.size} incorrect cell(s). Please fix the red ones.`;
   }
+}
+
+function showWinModal(timeInSeconds) {
+  const time = formatTime(timeInSeconds);
+  document.getElementById('win-stats').textContent = 
+    `Difficulty: ${currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1)} | Hints: ${hintsUsed} | Time: ${time}`;
+  document.getElementById('username-input').value = '';
+  document.getElementById('win-modal').classList.add('show');
+}
+
+function closeWinModal() {
+  document.getElementById('win-modal').classList.remove('show');
+}
+
+async function submitScore() {
+  const username = document.getElementById('username-input').value.trim();
+  if (!username) {
+    alert('Please enter a name');
+    return;
+  }
+
+  const time = parseInt(document.getElementById('timer').innerText.replace('Time: ', '').split(':')[0]) * 60 + 
+               parseInt(document.getElementById('timer').innerText.replace('Time: ', '').split(':')[1]);
+  
+  const res = await fetch('/score', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      username,
+      difficulty: currentDifficulty,
+      hints: hintsUsed,
+      time
+    })
+  });
+
+  if (res.ok) {
+    closeWinModal();
+    loadLeaderboard();
+  }
+}
+
+function showLeaderboard() {
+  const modal = document.getElementById('leaderboard-modal');
+  loadLeaderboard();
+  modal.classList.add('show');
+}
+
+async function loadLeaderboard() {
+  const res = await fetch('/scores');
+  const data = await res.json();
+  const content = document.getElementById('leaderboard-content');
+  
+  if (data.scores.length === 0) {
+    content.innerHTML = '<div class="no-scores">No scores yet. Be the first to submit!</div>';
+    return;
+  }
+
+  let html = '<div class="leaderboard-header">' +
+    '<span class="leaderboard-rank">Rank</span>' +
+    '<span class="leaderboard-name">Name</span>' +
+    '<span class="leaderboard-diff">Difficulty</span>' +
+    '<span class="leaderboard-hints">Hints</span>' +
+    '<span class="leaderboard-time">Time</span>' +
+    '</div>';
+  
+  data.scores.forEach((score, idx) => {
+    const time = formatTime(score.time);
+    const rankClass = idx === 0 ? 'rank-1' : idx === 1 ? 'rank-2' : idx === 2 ? 'rank-3' : '';
+    html += `<div class="leaderboard-item">
+      <span class="leaderboard-rank ${rankClass}">${idx + 1}</span>
+      <span class="leaderboard-name">${score.username}</span>
+      <span class="leaderboard-diff">${score.difficulty}</span>
+      <span class="leaderboard-hints">${score.hints}</span>
+      <span class="leaderboard-time">${time}</span>
+    </div>`;
+  });
+  content.innerHTML = html;
 }
 
 async function giveHint() {
@@ -269,7 +343,23 @@ window.addEventListener('load', () => {
   document.getElementById('new-game').addEventListener('click', newGame);
   document.getElementById('check-solution').addEventListener('click', checkSolution);
   document.getElementById('hint').addEventListener('click', hint);
-  
+  document.getElementById('leaderboard-btn').addEventListener('click', showLeaderboard);
+
+  // Modal close buttons
+  document.querySelector('#leaderboard-modal .close').addEventListener('click', () => {
+    document.getElementById('leaderboard-modal').classList.remove('show');
+  });
+  document.getElementById('submit-score').addEventListener('click', submitScore);
+  document.getElementById('skip-score').addEventListener('click', closeWinModal);
+
+  // Close modal on outside click
+  window.addEventListener('click', (e) => {
+    const leaderboardModal = document.getElementById('leaderboard-modal');
+    const winModal = document.getElementById('win-modal');
+    if (e.target === leaderboardModal) leaderboardModal.classList.remove('show');
+    if (e.target === winModal) winModal.classList.remove('show');
+  });
+
   // Difficulty buttons
   const difficultyBtns = document.querySelectorAll('.difficulty-btn');
   difficultyBtns.forEach(btn => {
@@ -281,6 +371,9 @@ window.addEventListener('load', () => {
     });
   });
   
-  // initialize
+  // Load leaderboard on page load
+  loadLeaderboard();
+  
+  // initialize game
   newGame();
 });
