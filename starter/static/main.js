@@ -136,14 +136,22 @@ async function checkSolution() {
   for (let idx = 0; idx < inputs.length; idx++) {
     const inp = inputs[idx];
     if (inp.disabled) continue;
-    inp.className = 'sudoku-cell';
+    inp.classList.remove('incorrect', 'success');
+    inp.classList.add('sudoku-cell');
     if (incorrect.has(idx)) {
       inp.classList.add('incorrect');
     }
   }
   if (incorrect.size === 0) {
     msg.style.color = '#388e3c';
-    msg.innerText = 'Congratulations! You solved it!';
+    msg.innerText = '🎉 Congratulations! You solved the Sudoku! 🎉';
+    // highlight all non-locked cells as success
+    for (let idx = 0; idx < inputs.length; idx++) {
+      const inp = inputs[idx];
+      if (!inp.disabled) {
+        inp.classList.add('success');
+      }
+    }
   } else {
     msg.style.color = '#d32f2f';
     msg.innerText = `${incorrect.size} incorrect cell(s). Please fix the red ones.`;

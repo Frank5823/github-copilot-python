@@ -50,9 +50,20 @@ h1 {
     animation: blink-error 0.8s ease 0s 2;
 }
 
+.sudoku-cell.success {
+    background: #c8e6c9;
+    border-color: #388e3c;
+    animation: glow-success 0.8s ease 0s 1;
+}
+
 @keyframes blink-error {
     0%, 100% { box-shadow: 0 0 0px rgba(211, 47, 47, 0); }
     50% { box-shadow: 0 0 8px rgba(211, 47, 47, 0.8); }
+}
+
+@keyframes glow-success {
+    0%, 100% { box-shadow: 0 0 0px rgba(56, 142, 60, 0); }
+    50% { box-shadow: 0 0 10px rgba(56, 142, 60, 0.7); }
 }
 
 .sudoku-cell:nth-child(3),
