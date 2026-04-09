@@ -7,6 +7,8 @@
     --border-secondary: #bbbbbb;
     --cell-bg: #fafafa;
     --cell-prefilled: #e0e0e0;
+    --box-alternate: #f0f0f0;
+    --box-alternate-prefilled: #d8d8d8;
     --focus-bg: #e0f7fa;
     --button-base: #1976d2;
     --button-hover: #1565c0;
@@ -26,6 +28,8 @@ body.dark-mode {
     --border-secondary: #444444;
     --cell-bg: #3a3a3a;
     --cell-prefilled: #4a4a4a;
+    --box-alternate: #424242;
+    --box-alternate-prefilled: #555555;
     --focus-bg: #1a5f6f;
     --button-base: #2196f3;
     --button-hover: #1976d2;
@@ -235,6 +239,90 @@ body.dark-mode .leaderboard-item:nth-child(even) {
 .sudoku-row:nth-child(3) .sudoku-cell,
 .sudoku-row:nth-child(6) .sudoku-cell {
     border-bottom: 3px solid var(--border-primary);
+}
+
+/* Alternating 3x3 box colors */
+/* Box (0,1) - rows 1-3, cols 4-6 */
+.sudoku-row:nth-child(1) .sudoku-cell:nth-child(4),
+.sudoku-row:nth-child(1) .sudoku-cell:nth-child(5),
+.sudoku-row:nth-child(1) .sudoku-cell:nth-child(6),
+.sudoku-row:nth-child(2) .sudoku-cell:nth-child(4),
+.sudoku-row:nth-child(2) .sudoku-cell:nth-child(5),
+.sudoku-row:nth-child(2) .sudoku-cell:nth-child(6),
+.sudoku-row:nth-child(3) .sudoku-cell:nth-child(4),
+.sudoku-row:nth-child(3) .sudoku-cell:nth-child(5),
+.sudoku-row:nth-child(3) .sudoku-cell:nth-child(6),
+/* Box (1,0) - rows 4-6, cols 1-3 */
+.sudoku-row:nth-child(4) .sudoku-cell:nth-child(1),
+.sudoku-row:nth-child(4) .sudoku-cell:nth-child(2),
+.sudoku-row:nth-child(4) .sudoku-cell:nth-child(3),
+.sudoku-row:nth-child(5) .sudoku-cell:nth-child(1),
+.sudoku-row:nth-child(5) .sudoku-cell:nth-child(2),
+.sudoku-row:nth-child(5) .sudoku-cell:nth-child(3),
+.sudoku-row:nth-child(6) .sudoku-cell:nth-child(1),
+.sudoku-row:nth-child(6) .sudoku-cell:nth-child(2),
+.sudoku-row:nth-child(6) .sudoku-cell:nth-child(3),
+/* Box (1,2) - rows 4-6, cols 7-9 */
+.sudoku-row:nth-child(4) .sudoku-cell:nth-child(7),
+.sudoku-row:nth-child(4) .sudoku-cell:nth-child(8),
+.sudoku-row:nth-child(4) .sudoku-cell:nth-child(9),
+.sudoku-row:nth-child(5) .sudoku-cell:nth-child(7),
+.sudoku-row:nth-child(5) .sudoku-cell:nth-child(8),
+.sudoku-row:nth-child(5) .sudoku-cell:nth-child(9),
+.sudoku-row:nth-child(6) .sudoku-cell:nth-child(7),
+.sudoku-row:nth-child(6) .sudoku-cell:nth-child(8),
+.sudoku-row:nth-child(6) .sudoku-cell:nth-child(9),
+/* Box (2,1) - rows 7-9, cols 4-6 */
+.sudoku-row:nth-child(7) .sudoku-cell:nth-child(4),
+.sudoku-row:nth-child(7) .sudoku-cell:nth-child(5),
+.sudoku-row:nth-child(7) .sudoku-cell:nth-child(6),
+.sudoku-row:nth-child(8) .sudoku-cell:nth-child(4),
+.sudoku-row:nth-child(8) .sudoku-cell:nth-child(5),
+.sudoku-row:nth-child(8) .sudoku-cell:nth-child(6),
+.sudoku-row:nth-child(9) .sudoku-cell:nth-child(4),
+.sudoku-row:nth-child(9) .sudoku-cell:nth-child(5),
+.sudoku-row:nth-child(9) .sudoku-cell:nth-child(6) {
+    background: var(--box-alternate) !important;
+}
+
+.sudoku-cell.prefilled,
+.sudoku-row:nth-child(1) .sudoku-cell.prefilled:nth-child(4),
+.sudoku-row:nth-child(1) .sudoku-cell.prefilled:nth-child(5),
+.sudoku-row:nth-child(1) .sudoku-cell.prefilled:nth-child(6),
+.sudoku-row:nth-child(2) .sudoku-cell.prefilled:nth-child(4),
+.sudoku-row:nth-child(2) .sudoku-cell.prefilled:nth-child(5),
+.sudoku-row:nth-child(2) .sudoku-cell.prefilled:nth-child(6),
+.sudoku-row:nth-child(3) .sudoku-cell.prefilled:nth-child(4),
+.sudoku-row:nth-child(3) .sudoku-cell.prefilled:nth-child(5),
+.sudoku-row:nth-child(3) .sudoku-cell.prefilled:nth-child(6),
+.sudoku-row:nth-child(4) .sudoku-cell.prefilled:nth-child(1),
+.sudoku-row:nth-child(4) .sudoku-cell.prefilled:nth-child(2),
+.sudoku-row:nth-child(4) .sudoku-cell.prefilled:nth-child(3),
+.sudoku-row:nth-child(5) .sudoku-cell.prefilled:nth-child(1),
+.sudoku-row:nth-child(5) .sudoku-cell.prefilled:nth-child(2),
+.sudoku-row:nth-child(5) .sudoku-cell.prefilled:nth-child(3),
+.sudoku-row:nth-child(6) .sudoku-cell.prefilled:nth-child(1),
+.sudoku-row:nth-child(6) .sudoku-cell.prefilled:nth-child(2),
+.sudoku-row:nth-child(6) .sudoku-cell.prefilled:nth-child(3),
+.sudoku-row:nth-child(4) .sudoku-cell.prefilled:nth-child(7),
+.sudoku-row:nth-child(4) .sudoku-cell.prefilled:nth-child(8),
+.sudoku-row:nth-child(4) .sudoku-cell.prefilled:nth-child(9),
+.sudoku-row:nth-child(5) .sudoku-cell.prefilled:nth-child(7),
+.sudoku-row:nth-child(5) .sudoku-cell.prefilled:nth-child(8),
+.sudoku-row:nth-child(5) .sudoku-cell.prefilled:nth-child(9),
+.sudoku-row:nth-child(6) .sudoku-cell.prefilled:nth-child(7),
+.sudoku-row:nth-child(6) .sudoku-cell.prefilled:nth-child(8),
+.sudoku-row:nth-child(6) .sudoku-cell.prefilled:nth-child(9),
+.sudoku-row:nth-child(7) .sudoku-cell.prefilled:nth-child(4),
+.sudoku-row:nth-child(7) .sudoku-cell.prefilled:nth-child(5),
+.sudoku-row:nth-child(7) .sudoku-cell.prefilled:nth-child(6),
+.sudoku-row:nth-child(8) .sudoku-cell.prefilled:nth-child(4),
+.sudoku-row:nth-child(8) .sudoku-cell.prefilled:nth-child(5),
+.sudoku-row:nth-child(8) .sudoku-cell.prefilled:nth-child(6),
+.sudoku-row:nth-child(9) .sudoku-cell.prefilled:nth-child(4),
+.sudoku-row:nth-child(9) .sudoku-cell.prefilled:nth-child(5),
+.sudoku-row:nth-child(9) .sudoku-cell.prefilled:nth-child(6) {
+    background: var(--box-alternate-prefilled) !important;
 }
 
 .controls {

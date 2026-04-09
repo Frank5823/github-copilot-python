@@ -35,6 +35,13 @@
     "timestamp": "2026-04-02T14:53:17.969671"
   },
   {
+    "username": "Player1",
+    "difficulty": "easy",
+    "hints": 1,
+    "time": 120,
+    "timestamp": "2026-04-09T12:45:18.921848"
+  },
+  {
     "username": "TestPlayer",
     "difficulty": "medium",
     "hints": 2,
@@ -68,5 +75,12 @@
     "hints": 2,
     "time": 180,
     "timestamp": "2026-04-02T14:53:17.964330"
+  },
+  {
+    "username": "TestPlayer",
+    "difficulty": "medium",
+    "hints": 2,
+    "time": 180,
+    "timestamp": "2026-04-09T12:45:18.882507"
   }
 ]
