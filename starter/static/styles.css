@@ -507,3 +507,334 @@ body.dark-mode .leaderboard-entry:nth-child(odd) {
     width: 80px;
     text-align: right;
 }
+
+/* Mobile Media Queries */
+/* Devices 360px - 480px (small phones) */
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    .header {
+        flex-direction: column;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        gap: 8px;
+    }
+
+    h1 {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .theme-toggle,
+    .leaderboard-btn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    /* Sudoku Grid - 30px cells for 360px width */
+    .sudoku-cell {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        border: 1px solid var(--border-secondary);
+    }
+
+    /* Adjust border widths for smaller grid */
+    .sudoku-cell:nth-child(3),
+    .sudoku-cell:nth-child(6) {
+        border-right-width: 2px;
+    }
+
+    .sudoku-row:nth-child(3) .sudoku-cell,
+    .sudoku-row:nth-child(6) .sudoku-cell {
+        border-bottom-width: 2px;
+    }
+
+    #sudoku-board {
+        margin: 15px auto;
+        border-width: 3px;
+        padding: 2px;
+    }
+
+    .controls {
+        margin: 10px auto;
+        padding: 0 5px;
+    }
+
+    .difficulty {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4px;
+        margin-right: 0;
+        margin-bottom: 8px;
+        width: 100%;
+    }
+
+    .difficulty-btn {
+        padding: 5px 8px;
+        margin: 0;
+        font-size: 12px;
+        flex: 1;
+        min-width: 60px;
+    }
+
+    button {
+        padding: 6px 10px;
+        margin: 4px 2px;
+        font-size: 13px;
+    }
+
+    #timer,
+    #message {
+        display: block;
+        margin: 8px 0;
+        font-size: 13px;
+        margin-left: 0;
+    }
+
+    #message {
+        color: #d32f2f;
+    }
+
+    .leaderboard-display {
+        margin: 15px auto;
+        padding: 15px;
+        max-width: 100%;
+        border-radius: 6px;
+    }
+
+    .leaderboard-display h3 {
+        font-size: 16px;
+        margin: 0 0 10px 0;
+    }
+
+    #leaderboard-content {
+        max-height: 300px;
+    }
+
+    .leaderboard-header {
+        padding: 8px;
+        font-size: 10px;
+    }
+
+    .leaderboard-item {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .leaderboard-rank {
+        width: 25px;
+        font-size: 14px;
+    }
+
+    .leaderboard-rank.rank-1 {
+        font-size: 14px;
+    }
+
+    .leaderboard-name {
+        margin-left: 5px;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .leaderboard-diff {
+        width: 50px;
+        font-size: 10px;
+    }
+
+    .leaderboard-hints {
+        width: 40px;
+        font-size: 10px;
+    }
+
+    .leaderboard-time {
+        width: 50px;
+        font-size: 10px;
+    }
+
+    /* Modal adjustments */
+    .modal-content {
+        padding: 20px;
+        max-width: 95%;
+        margin: 20px;
+    }
+
+    .modal-content h2 {
+        font-size: 18px;
+    }
+
+    .close {
+        font-size: 24px;
+        top: 5px;
+        right: 10px;
+    }
+
+    #username-input {
+        padding: 6px;
+        font-size: 14px;
+        margin: 8px 0;
+    }
+
+    .modal-buttons {
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .modal-buttons button {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    #win-stats {
+        font-size: 12px;
+    }
+
+    .leaderboard-entry {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .leaderboard-rank {
+        width: 25px;
+    }
+
+    .leaderboard-difficulty {
+        width: 60px;
+    }
+
+    .leaderboard-hints {
+        width: 45px;
+    }
+
+    .leaderboard-time {
+        width: 60px;
+    }
+}
+
+/* Devices 481px - 768px (medium phones & tablets) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .header {
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .theme-toggle,
+    .leaderboard-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    /* Sudoku Grid - 35px cells */
+    .sudoku-cell {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+
+    #sudoku-board {
+        margin: 20px auto;
+        border-width: 4px;
+    }
+
+    .controls {
+        margin: 15px auto;
+        padding: 0 10px;
+    }
+
+    .difficulty {
+        margin-right: 15px;
+    }
+
+    .difficulty-btn {
+        padding: 6px 10px;
+        font-size: 13px;
+        margin: 0 3px;
+    }
+
+    button {
+        padding: 7px 14px;
+        margin: 0 6px;
+        font-size: 14px;
+    }
+
+    #timer,
+    #message {
+        font-size: 14px;
+        margin-left: 15px;
+    }
+
+    .leaderboard-display {
+        margin: 20px auto;
+        padding: 18px;
+        max-width: 90%;
+    }
+
+    .leaderboard-display h3 {
+        font-size: 17px;
+    }
+
+    .leaderboard-item {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .leaderboard-header {
+        font-size: 11px;
+    }
+
+    .modal-content {
+        padding: 25px;
+        max-width: 90%;
+    }
+
+    .modal-content h2 {
+        font-size: 20px;
+    }
+
+    #username-input {
+        padding: 7px;
+        font-size: 15px;
+    }
+}
+
+/* Landscape orientation adjustments - all devices */
+@media (max-height: 500px) {
+    .header {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        gap: 10px;
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+
+    #sudoku-board {
+        margin: 8px auto;
+    }
+
+    .controls {
+        margin: 8px auto;
+    }
+
+    #timer,
+    #message {
+        display: inline;
+        margin-left: 10px;
+        font-size: 12px;
+    }
+
+    .leaderboard-display {
+        margin: 10px auto;
+        padding: 10px;
+    }
+}
