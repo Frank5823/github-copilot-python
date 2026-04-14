@@ -95,11 +95,6 @@ function createBoardElement() {
       input.className = 'sudoku-cell';
       input.dataset.row = i;
       input.dataset.col = j;
-      input.addEventListener('input', (e) => {
-        const val = e.target.value.replace(/[^1-9]/g, '');
-        e.target.value = val;
-        validateCell(i, j, val);
-      });
       rowDiv.appendChild(input);
     }
     boardDiv.appendChild(rowDiv);
@@ -401,6 +396,18 @@ window.addEventListener('load', () => {
   document.getElementById('check-solution').addEventListener('click', checkSolution);
   document.getElementById('hint').addEventListener('click', hint);
   document.getElementById('leaderboard-btn').addEventListener('click', showLeaderboard);
+
+  // Board cell input delegation
+  const boardDiv = document.getElementById('sudoku-board');
+  boardDiv.addEventListener('input', (e) => {
+    if (e.target.classList.contains('sudoku-cell')) {
+      const row = parseInt(e.target.dataset.row, 10);
+      const col = parseInt(e.target.dataset.col, 10);
+      const val = e.target.value.replace(/[^1-9]/g, '');
+      e.target.value = val;
+      validateCell(row, col, val);
+    }
+  });
 
   // Modal close buttons
   document.querySelector('#leaderboard-modal .close').addEventListener('click', () => {
