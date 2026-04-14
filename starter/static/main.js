@@ -6,6 +6,29 @@ let startTime = null;
 let timerInterval = null;
 let hintsUsed = 0;
 
+// LocalStorage management for leaderboard
+const STORAGE_KEY = 'sudoku-top-10-scores';
+const MAX_STORED_SCORES = 10;
+
+function getStoredScores() {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  return stored ? JSON.parse(stored) : [];
+}
+
+function saveScoresToStorage(scores) {
+  // Keep only top 10, sorted by time (ascending)
+  const topScores = scores
+    .sort((a, b) => a.time - b.time)
+    .slice(0, MAX_STORED_SCORES);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(topScores));
+}
+
+function addScoreToStorage(newScore) {
+  const scores = getStoredScores();
+  scores.push(newScore);
+  saveScoresToStorage(scores);
+}
+
 // Theme management
 function initTheme() {
   const savedTheme = localStorage.getItem('sudoku-theme') || 'light';
@@ -246,6 +269,12 @@ function closeWinModal() {
   document.getElementById('win-modal').classList.remove('show');
 }
 
+function showLeaderboard() {
+  const modal = document.getElementById('leaderboard-modal');
+  loadLeaderboard();
+  modal.classList.add('show');
+}
+
 async function submitScore() {
   const username = document.getElementById('username-input').value.trim();
   if (!username) {
@@ -256,35 +285,63 @@ async function submitScore() {
   const time = parseInt(document.getElementById('timer').innerText.replace('Time: ', '').split(':')[0]) * 60 + 
                parseInt(document.getElementById('timer').innerText.replace('Time: ', '').split(':')[1]);
   
-  const res = await fetch('/score', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      username,
-      difficulty: currentDifficulty,
-      hints: hintsUsed,
-      time
-    })
-  });
+  const scoreData = {
+    username,
+    difficulty: currentDifficulty,
+    hints: hintsUsed,
+    time
+  };
 
-  if (res.ok) {
+  // Save to localStorage immediately
+  addScoreToStorage(scoreData);
+
+  // Try to sync with backend
+  try {
+    const res = await fetch('/score', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(scoreData)
+    });
+
+    if (res.ok) {
+      closeWinModal();
+      loadLeaderboard();
+    }
+  } catch (error) {
+    console.log('Backend sync failed, but score saved locally:', error);
     closeWinModal();
     loadLeaderboard();
   }
 }
 
-function showLeaderboard() {
-  const modal = document.getElementById('leaderboard-modal');
-  loadLeaderboard();
-  modal.classList.add('show');
+async function loadLeaderboard() {
+  let scores = [];
+  
+  // Try to fetch from backend
+  try {
+    const res = await fetch('/scores');
+    if (res.ok) {
+      const data = await res.json();
+      scores = data.scores;
+      // Sync backend scores to localStorage
+      saveScoresToStorage(scores);
+    }
+  } catch (error) {
+    console.log('Backend fetch failed, using localStorage:', error);
+  }
+
+  // If no backend scores, use localStorage
+  if (scores.length === 0) {
+    scores = getStoredScores();
+  }
+
+  displayLeaderboard(scores);
 }
 
-async function loadLeaderboard() {
-  const res = await fetch('/scores');
-  const data = await res.json();
+function displayLeaderboard(scores) {
   const content = document.getElementById('leaderboard-content');
   
-  if (data.scores.length === 0) {
+  if (scores.length === 0) {
     content.innerHTML = '<div class="no-scores">No scores yet. Be the first to submit!</div>';
     return;
   }
@@ -297,7 +354,7 @@ async function loadLeaderboard() {
     '<span class="leaderboard-time">Time</span>' +
     '</div>';
   
-  data.scores.forEach((score, idx) => {
+  scores.forEach((score, idx) => {
     const time = formatTime(score.time);
     const rankClass = idx === 0 ? 'rank-1' : idx === 1 ? 'rank-2' : idx === 2 ? 'rank-3' : '';
     html += `<div class="leaderboard-item">
